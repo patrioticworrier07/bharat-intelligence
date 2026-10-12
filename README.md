@@ -1,12 +1,10 @@
-# Bharat Intelligence — website starter
+# Bharat Intelligence dashboard update
 
-This is a responsive static website for an independent public-interest OSINT research platform.
+1. Extract this ZIP.
+2. Open your `patrioticworrier07/bharat-intelligence` repository on GitHub.
+3. Tap **Add file → Upload files**.
+4. Upload the new `index.html` and replace the existing file.
+5. Commit the change to the `main` branch.
+6. Wait a minute or two, then refresh https://patrioticworrier07.github.io/bharat-intelligence/
 
-## Publish with GitHub Pages
-1. Create a new repository in your GitHub account (or use a repository you control).
-2. Upload `index.html` to the repository root.
-3. Open repository **Settings → Pages**.
-4. Choose **Deploy from a branch**, select `main` and `/(root)`, then save.
-5. Wait for deployment and open the URL shown by GitHub.
-
-The homepage is a curated directory of public resources; it does not claim to provide live intelligence or automated verification. Check original sources and dates before publishing findings. Research lawfully, respect privacy, and clearly label uncertainty. This is not an official Government of India website.
+Important: this is a static dashboard. Its map markers and summary counts are illustrative placeholders, not live incident data. Links open public sources; automatic live data integration is not included. This is an independent project, not an official government or intelligence service.
