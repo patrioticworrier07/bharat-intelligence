@@ -1,16 +1,13 @@
-# Bharat Intelligence — Open-Source Situation Desk
+# Bharat Intelligence — Globe & News Fix
 
-A static GitHub Pages dashboard for public-source research. It includes an interactive globe, GDELT headline search, topic filters, official-source directory, and an evidence-search workflow for checking claims.
+Upload `index.html` to the root of your GitHub Pages repository, replacing the existing file.
 
-## Deploy
-1. Extract this ZIP on your phone/computer.
-2. In your GitHub repository `patrioticworrier07/bharat-intelligence`, replace the root `index.html` with this version.
-3. Commit the change to the `main` branch.
-4. Wait for GitHub Pages to publish, then refresh the published site.
+## Improvements
+- Large responsive 3D Earth using the open-source globe.gl library and public Earth texture assets.
+- Clickable broad regional monitoring markers; these open public GDELT news searches and are explicitly not live incident coordinates.
+- Embedded GDELT HTML news results for India and global headlines, with topic selectors and buttons to open the feed directly if embedded results are blocked.
+- Claim search workspace creates evidence-search links; it is not an AI truth verdict. A genuine AI fact-checker requires a secure backend.
+- Official source links and mobile responsive layout.
 
-## Important limitations
-- This is not an official intelligence service and does not access classified information.
-- News headlines are third-party reports, not verified facts. GDELT API/browser access can be unavailable or blocked; the page displays an error rather than inventing results.
-- The globe markers are illustrative topic-search regions, not live incident coordinates.
-- The claim-checker is evidence-assisted search, not a true AI fact-check model. A real AI service requires a backend and a securely stored API key; never put secrets in public HTML/JavaScript.
-- Third-party globe assets/library require internet connectivity and may be subject to their own terms.
+## Notes
+This is a static GitHub Pages website. It needs an internet connection to load the globe library, Earth texture, and GDELT feeds. If a CDN or feed is blocked, the page includes a fallback and direct-search options. No API keys are used or embedded. Marker locations are broad illustrative monitoring anchors, not verified current incidents.
