@@ -1,19 +1,15 @@
-# Bharat Intelligence — live-feed update
+# Bharat Intelligence — Interactive Globe Update
 
-## Update your existing GitHub Pages site
-1. Download and extract this ZIP on your phone.
-2. Open https://github.com/patrioticworrier07/bharat-intelligence
-3. Tap **Add file → Upload files**.
-4. Upload the new `index.html`, replacing the existing one.
-5. Commit to `main`, then wait a minute or two and refresh https://patrioticworrier07.github.io/bharat-intelligence/
+This is a static GitHub Pages website update. It adds a rotatable 3D Earth globe using the open-source globe.gl library and a public Earth texture. Markers represent broad news-monitoring regions and categories; they are NOT verified live incident locations, battlefield positions, or official intelligence.
 
-## What works
-- India and global headlines are requested from the public GDELT DOC API when the page loads, with refresh buttons and automatic refresh every 15 minutes.
-- If browser access to the API is blocked or the service is unavailable, the panel shows an explanatory message rather than silently staying empty.
-- Cyber advisories, disaster alerts, economy, and space panels link to official public sources.
+## Globe features
+- Rotate the globe by dragging; tap/click a marker to view its monitoring topic.
+- Each marker offers a GDELT public-news search and a general news search.
+- Existing India and global headline panels continue to request GDELT headlines in the browser and refresh periodically.
+- Globe library and Earth textures load from public CDNs, so internet access is required.
+
+## Publish on GitHub Pages
+Replace the repository's root `index.html` with the included `index.html`, then commit the change to the `main` branch. Keep the file at the repository root, not inside a nested folder.
 
 ## Limitations
-- Static GitHub Pages cannot safely keep private API keys. This version does not require an API key for the headline feeds.
-- The map markers are illustrative, not real incident locations.
-- News articles are not automatically verified; check publisher, dates, and corroboration.
-- This is an independent project, not an official government/intelligence service.
+This does not geolocate individual news reports into confirmed incident coordinates. Markers are broad monitoring areas, and headlines are not proof that an event occurred. Check original reporting and official advisories. The site is an independent public-source research project, not an official intelligence service.

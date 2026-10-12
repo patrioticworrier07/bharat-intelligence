@@ -22,7 +22,13 @@ main{max-width:1500px;margin:auto;padding:12px}.stats{display:grid;grid-template
 </section>
 <section class="layout">
 <aside class="card"><h2>☷ MONITOR FILTERS</h2><div class="pad"><label class="filter"><input type="checkbox" checked> India headlines</label><label class="filter"><input type="checkbox" checked> Global headlines</label><label class="filter"><input type="checkbox" checked> Cyber advisories</label><label class="filter"><input type="checkbox" checked> Natural disasters</label><label class="filter"><input type="checkbox" checked> Space updates</label><label class="filter"><input type="checkbox" checked> Economic data</label></div><p class="note">Live headline feeds require internet access. Articles are reports, not verified facts; check the linked publisher.</p></aside>
-<section class="card" id="world"><h2>◎ GLOBAL SITUATION MAP <span class="pill">ILLUSTRATIVE</span></h2><div class="map"><div class="world"></div><span class="label" style="left:15%;top:28%">NORTH AMERICA</span><span class="label" style="left:48%;top:22%">EUROPE</span><span class="label" style="left:62%;top:35%">ASIA</span><span class="label" style="left:40%;top:59%">AFRICA</span><span class="label" style="left:72%;top:79%">AUSTRALIA</span><i class="dot o" style="left:19%;top:32%"></i><i class="dot g" style="left:24%;top:42%"></i><i class="dot" style="left:48%;top:28%"></i><i class="dot" style="left:53%;top:37%"></i><i class="dot o" style="left:58%;top:46%"></i><i class="dot g" style="left:62%;top:52%"></i><i class="dot o" style="left:74%;top:48%"></i><div class="legend">🔴 Illustrative marker　 🟠 Illustrative marker　 🟢 Illustrative marker</div></div><p class="note">This is a visual map only; markers are not real-time incident locations.</p></section>
+<section class="card" id="world"><h2>◎ EARTH SITUATION GLOBE <span class="pill">PUBLIC-SOURCE MONITOR</span></h2>
+<div id="globeWrap" style="height:340px;position:relative;overflow:hidden;border-radius:10px;background:radial-gradient(circle at 50% 45%,#123047,#06111d 72%)">
+<div id="earthGlobe" style="width:100%;height:100%"></div>
+<div id="globeStatus" style="position:absolute;left:10px;bottom:8px;font-size:11px;color:#92aabc;background:#07131ddd;padding:5px 8px;border-radius:5px">Loading interactive globe…</div></div>
+<div class="legend" style="margin-top:10px">🔴 Conflict-news monitoring　 🟠 Geopolitical monitoring　 🔵 India focus</div>
+<div id="globeDetail" class="note" aria-live="polite" style="padding:9px;background:#07131d;border-radius:7px;margin-top:8px">Tap a marker to see its monitoring topic and open related public-source headlines.</div>
+<p class="note">Markers indicate broad areas to monitor, not verified incident coordinates or live battlefield positions. News coverage can be incomplete or contradictory.</p></section>
 <aside class="card"><h2>◉ LIVE GLOBAL HEADLINES <button class="action" onclick="loadFeed('world')">Refresh</button></h2><ul class="feed" id="worldFeed"><li class="loading">Loading global headlines…</li></ul></aside>
 </section>
 <section class="lower">
@@ -62,4 +68,50 @@ async function loadFeed(kind){
 }
 function tick(){document.getElementById('clock').textContent=new Intl.DateTimeFormat('en-IN',{dateStyle:'medium',timeStyle:'medium',timeZone:'Asia/Kolkata'}).format(new Date())+' IST'}
 tick();setInterval(tick,1000);loadFeed('india');loadFeed('world');setInterval(()=>{loadFeed('india');loadFeed('world')},15*60*1000);
+
+// Interactive 3D globe. Marker coordinates are broad monitoring regions, not incident locations.
+const globeRegions=[
+ {name:'Eastern Europe',lat:48.5,lng:35,kind:'conflict',topic:'Ukraine / Eastern Europe conflict coverage',query:'Ukraine conflict'},
+ {name:'Gaza / Eastern Mediterranean',lat:31.5,lng:34.5,kind:'conflict',topic:'Israel / Gaza and regional developments',query:'Gaza Israel conflict'},
+ {name:'Red Sea',lat:15,lng:42,kind:'geo',topic:'Red Sea maritime security and shipping',query:'Red Sea maritime security'},
+ {name:'Sudan',lat:13.5,lng:30,kind:'conflict',topic:'Sudan conflict and humanitarian reporting',query:'Sudan conflict'},
+ {name:'Sahel',lat:16,lng:2,kind:'conflict',topic:'Sahel security developments',query:'Sahel security conflict'},
+ {name:'Myanmar',lat:21,lng:96,kind:'conflict',topic:'Myanmar conflict and regional reporting',query:'Myanmar conflict'},
+ {name:'Korean Peninsula',lat:38,lng:127.5,kind:'geo',topic:'Korean Peninsula security developments',query:'Korean peninsula security'},
+ {name:'South China Sea',lat:12,lng:113,kind:'geo',topic:'South China Sea maritime and geopolitical coverage',query:'South China Sea tensions'},
+ {name:'India',lat:22.5,lng:79,kind:'india',topic:'India public affairs, security and policy coverage',query:'India security policy'},
+ {name:'Haiti / Caribbean',lat:19,lng:-72,kind:'geo',topic:'Caribbean security and humanitarian coverage',query:'Haiti security crisis'}
+];
+function openRegion(d){
+ const detail=document.getElementById('globeDetail');
+ detail.innerHTML='<strong>'+esc(d.name)+'</strong> · '+esc(d.topic)+'<br><a target="_blank" rel="noopener" href="https://www.google.com/search?q='+encodeURIComponent(d.query+' news')+'">Search current reporting ↗</a> &nbsp; <a target="_blank" rel="noopener" href="https://api.gdeltproject.org/api/v2/doc/doc?query='+encodeURIComponent(d.query)+'&mode=ArtList&format=json&sort=DateDesc&maxrecords=10">Open GDELT results ↗</a>';
+}
+function initGlobe(){
+ const target=document.getElementById('earthGlobe');
+ if(!window.Globe){document.getElementById('globeStatus').textContent='3D globe unavailable — check internet access';return;}
+ const palette={conflict:'#ff4e65',geo:'#ffb347',india:'#22c7ff'};
+ const points=globeRegions.map(d=>({...d,color:palette[d.kind]}));
+ const globe=Globe()(target)
+  .backgroundColor('rgba(0,0,0,0)')
+  .globeImageUrl('https://unpkg.com/three-globe/example/img/earth-blue-marble.jpg')
+  .bumpImageUrl('https://unpkg.com/three-globe/example/img/earth-topology.png')
+  .showAtmosphere(true).atmosphereColor('#3a9bdc').atmosphereAltitude(0.16)
+  .pointsData(points).pointLat('lat').pointLng('lng').pointColor('color')
+  .pointAltitude(0.025).pointRadius(0.42).pointResolution(12)
+  .pointLabel(d=>'<b>'+d.name+'</b><br>'+d.topic)
+  .onPointClick(d=>openRegion(d))
+  .onPointHover(d=>{target.style.cursor=d?'pointer':'grab';});
+  globe.controls().autoRotate=true;globe.controls().autoRotateSpeed=0.38;
+  globe.controls().enableDamping=true;
+  const resize=()=>{globe.width(target.clientWidth);globe.height(target.clientHeight)};
+  resize();window.addEventListener('resize',resize);
+  document.getElementById('globeStatus').textContent='Drag to rotate · Tap a marker for source links';
+  openRegion(points.find(d=>d.kind==='india'));
+}
+const globeLoader=document.createElement('script');
+globeLoader.src='https://cdn.jsdelivr.net/npm/globe.gl';
+globeLoader.onload=initGlobe;
+globeLoader.onerror=()=>{document.getElementById('globeStatus').textContent='Could not load 3D globe library. Headline panels remain available.'};
+document.head.appendChild(globeLoader);
+
 </script></body></html>
