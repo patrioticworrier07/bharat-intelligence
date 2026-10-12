@@ -1,15 +1,16 @@
-# Bharat Intelligence — Interactive Globe Update
+# Bharat Intelligence — Open-Source Situation Desk
 
-This is a static GitHub Pages website update. It adds a rotatable 3D Earth globe using the open-source globe.gl library and a public Earth texture. Markers represent broad news-monitoring regions and categories; they are NOT verified live incident locations, battlefield positions, or official intelligence.
+A static GitHub Pages dashboard for public-source research. It includes an interactive globe, GDELT headline search, topic filters, official-source directory, and an evidence-search workflow for checking claims.
 
-## Globe features
-- Rotate the globe by dragging; tap/click a marker to view its monitoring topic.
-- Each marker offers a GDELT public-news search and a general news search.
-- Existing India and global headline panels continue to request GDELT headlines in the browser and refresh periodically.
-- Globe library and Earth textures load from public CDNs, so internet access is required.
+## Deploy
+1. Extract this ZIP on your phone/computer.
+2. In your GitHub repository `patrioticworrier07/bharat-intelligence`, replace the root `index.html` with this version.
+3. Commit the change to the `main` branch.
+4. Wait for GitHub Pages to publish, then refresh the published site.
 
-## Publish on GitHub Pages
-Replace the repository's root `index.html` with the included `index.html`, then commit the change to the `main` branch. Keep the file at the repository root, not inside a nested folder.
-
-## Limitations
-This does not geolocate individual news reports into confirmed incident coordinates. Markers are broad monitoring areas, and headlines are not proof that an event occurred. Check original reporting and official advisories. The site is an independent public-source research project, not an official intelligence service.
+## Important limitations
+- This is not an official intelligence service and does not access classified information.
+- News headlines are third-party reports, not verified facts. GDELT API/browser access can be unavailable or blocked; the page displays an error rather than inventing results.
+- The globe markers are illustrative topic-search regions, not live incident coordinates.
+- The claim-checker is evidence-assisted search, not a true AI fact-check model. A real AI service requires a backend and a securely stored API key; never put secrets in public HTML/JavaScript.
+- Third-party globe assets/library require internet connectivity and may be subject to their own terms.
